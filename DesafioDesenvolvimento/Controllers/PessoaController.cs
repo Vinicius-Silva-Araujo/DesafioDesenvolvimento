@@ -1,6 +1,10 @@
-﻿using DesafioDesenvolvimento.Models;
+﻿using AutoMapper;
+using DesafioDesenvolvimento.Data;
+using DesafioDesenvolvimento.Data.Dtos;
+using DesafioDesenvolvimento.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.EntityFrameworkCore;
 
 namespace DesafioDesenvolvimento.Controllers;
 
@@ -8,38 +12,51 @@ namespace DesafioDesenvolvimento.Controllers;
 [Route("[controller]")]
 public class PessoaController : ControllerBase
 {
-    private static List<Pessoa> pessoas = new List<Pessoa>();
-    private static int id = 0;
+    private PessoaContext _context;
+    private IMapper _mapper;
 
-
-
+    public PessoaController(PessoaContext context, IMapper mapper)
+    {
+        _context = context;
+        _mapper = mapper;
+    }
 
     [HttpPost]
-    public IActionResult IActinResult([FromBody] Pessoa pessoa)
+    public IActionResult AdicinarPessoa([FromBody] CreatePessoaDto pessoaDto)
     {
+        Pessoa pessoa = _mapper.Map<Pessoa>(pessoaDto);
         pessoa.Date = DateTime.Now; 
-        pessoas.Add(pessoa);
-        pessoa.Id = id++;
+        _context.Add(pessoa);
+        _context.SaveChanges();       
         return CreatedAtAction(nameof(ConsultaPessoasId), new { id = pessoa.Id }, pessoa);
-        Console.WriteLine(pessoa.Nome);
-        Console.WriteLine(pessoa.Cpf);
-        Console.WriteLine(pessoa.UF);
-        Console.WriteLine(pessoa.DateNascimento);
-        Console.WriteLine(pessoa.Date);
-
+       
     }
+
     [HttpGet]
     public IEnumerable<Pessoa> ConsultaPessoas([FromQuery] int skip = 0, [FromQuery] int take = 10)
     {
-        return pessoas.Skip(skip).Take(take);
+        var listaDePessoa = _context.Pessoas.ToList();
+        return _context.Pessoas.Skip(skip).Take(take);
     }
+
     [HttpGet("{id}")]
     public IActionResult ConsultaPessoasId(int id) 
     {
-       var pessoa = pessoas.FirstOrDefault(pessoa => pessoa.Id == id);
-        if(pessoa == null) return NotFound();
+       var pessoa = _context.Pessoas.FirstOrDefault(pessoa => pessoa.Id == id);
+        if(pessoa == null) throw new Exception("Id buscado não encontrado");
         return Ok(pessoa);
 
+    }
+
+    [HttpPut("{id}")]
+    public IActionResult AtualizaPessoa(int id, [FromBody] UpdatePessoaDto pessoaDto)
+    {
+        var pessoa = _context.Pessoas.FirstOrDefault(
+            pessoa => pessoa.Id == id);
+        if (pessoa == null) return NotFound();
+        _mapper.Map(pessoaDto, pessoa);
+        _context.SaveChanges();
+        return NoContent();
     }
         
 }
