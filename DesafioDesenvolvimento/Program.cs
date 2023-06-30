@@ -1,4 +1,7 @@
 using DesafioDesenvolvimento.Data;
+using DesafioDesenvolvimento.Data.Dtos;
+using DesafioDesenvolvimento.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -10,14 +13,18 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("PessoaConnection");
 
 
-//builder.Services.AddDbContext<PessoaContext>(opts =>
-// opts.UseSqlServer(connectionString));
 builder.Services.AddEntityFrameworkSqlServer()
                 .AddDbContext<PessoaContext>(
                     options => options.UseSqlServer(builder.Configuration.GetConnectionString
                     ("PessoaConnection")));
+//builder.Services
+//    .AddIdentity<Usuario, IdentityRole>()
+//    /*.AddEntityFrameworkStores<UsuarioDbContext>()*/
+//    .AddDefaultTokenProviders();
+
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 
 
 //Add services to the container.

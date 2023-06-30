@@ -11,8 +11,10 @@ public class PessoaProfile : Profile
         CreateMap<CreatePessoaDto, Pessoa>();
         CreateMap<UpdatePessoaDto, Pessoa>();
         CreateMap<Pessoa, UpdatePessoaDto>();
-        CreateMap<Pessoa, ReadPessoaDto>();
+        CreateMap<Pessoa, ReadPessoaDto>();       
+
     }
+    
         
 
 }
