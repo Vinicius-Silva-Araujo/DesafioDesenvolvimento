@@ -14,13 +14,7 @@ var connectionString = builder.Configuration.GetConnectionString("PessoaConnecti
 
 
 builder.Services.AddEntityFrameworkSqlServer()
-                .AddDbContext<PessoaContext>(
-                    options => options.UseSqlServer(builder.Configuration.GetConnectionString
-                    ("PessoaConnection")));
-//builder.Services
-//    .AddIdentity<Usuario, IdentityRole>()
-//    /*.AddEntityFrameworkStores<UsuarioDbContext>()*/
-//    .AddDefaultTokenProviders();
+                .AddDbContext<PessoaContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("PessoaConnection")));
 
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

@@ -4,9 +4,6 @@ using DesafioDesenvolvimento.Data.Dtos;
 using DesafioDesenvolvimento.Models;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 
 namespace DesafioDesenvolvimento.Controllers;
 
