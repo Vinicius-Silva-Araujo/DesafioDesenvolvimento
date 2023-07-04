@@ -1,15 +1,11 @@
-﻿using Microsoft.AspNetCore.DataProtection.KeyManagement;
-using Microsoft.AspNetCore.Identity;
-using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
 
 namespace DesafioDesenvolvimento.Models
 {
-    public class Usuario
+    public class Usuario : IdentityUser
+
     {
-               
-        public string UserName { get; set; }       
-        public DateTime DataNascimento { get; set; }        
-        public string Password { get; set; }        
-        public string RePassword { get; set; }
+        public DateTime DataNascimento { get; set; }
+        public Usuario() : base() { }
     }
 }

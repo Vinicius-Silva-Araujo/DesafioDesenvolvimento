@@ -14,16 +14,24 @@ var connectionString = builder.Configuration.GetConnectionString("PessoaConnecti
 
 
 builder.Services.AddEntityFrameworkSqlServer()
-                .AddDbContext<PessoaContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("PessoaConnection")));
+    .AddDbContext<UsuarioDbContext>(opts => opts.UseSqlServer(builder.Configuration.GetConnectionString("PessoaConnection")))
+    .AddDbContext<PessoaContext>(opts => opts.UseSqlServer(builder.Configuration.GetConnectionString("PessoaConnection")));
 
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 
 
-//Add services to the container.
+//Add services to the container();
+
+builder.Services
+    .AddIdentity<Usuario, IdentityRole>()
+    .AddEntityFrameworkStores<UsuarioDbContext>()
+    .AddDefaultTokenProviders();
 
 builder.Services.AddControllers().AddNewtonsoftJson();
+
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>

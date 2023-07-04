@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace DesafioDesenvolvimento.Data.Dtos;
 
@@ -15,5 +14,5 @@ public class CreateUsuarioDto
     [Required]
     [Compare("Password")]
     public string RePassword { get; set; }
-    
+
 }

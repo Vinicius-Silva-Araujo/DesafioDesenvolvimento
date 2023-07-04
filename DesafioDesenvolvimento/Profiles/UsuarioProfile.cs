@@ -4,13 +4,12 @@ using DesafioDesenvolvimento.Models;
 
 namespace DesafioDesenvolvimento.Profiles
 {
-   
-        public class UsuariProfile : Profile
-        {
-            public UsuariProfile()
-            {
-                CreateMap<CreateUsuarioDto, Usuario>();
+    public class UsuarioProfile : Profile
+    {
+        public UsuarioProfile()
 
-            }
-        }
+        {
+            CreateMap<CreateUsuarioDto, Usuario>();        }
+    }
+    
 }
