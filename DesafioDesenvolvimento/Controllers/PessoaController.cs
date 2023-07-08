@@ -2,6 +2,7 @@
 using DesafioDesenvolvimento.Data;
 using DesafioDesenvolvimento.Data.Dtos;
 using DesafioDesenvolvimento.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -33,11 +34,11 @@ public class PessoaController : ControllerBase
     public IActionResult AdicinarPessoa([FromBody] CreatePessoaDto pessoaDto)
     {
         Pessoa pessoa = _mapper.Map<Pessoa>(pessoaDto);
-        pessoa.Date = DateTime.Now; 
+        pessoa.Date = DateTime.Now;
         _context.Add(pessoa);
-        _context.SaveChanges();       
+        _context.SaveChanges();
         return CreatedAtAction(nameof(ConsultaPessoasId), new { id = pessoa.Id }, pessoa);
-       
+
     }
 
     /// <summary>
@@ -47,10 +48,11 @@ public class PessoaController : ControllerBase
     /// <param name="take"></param>
     /// <returns></returns>
     [HttpGet]
-    public IEnumerable<ReadPessoaDto> ConsultaPessoas([FromQuery] int skip = 0, [FromQuery] int take = 10)
+    [Authorize(Roles = "usuario,admin")]
+    public IEnumerable<ReadPessoaDto> ConsultaPessoas([FromQuery] int skip = 0, [FromQuery] int take = 20)
     {
         var listaDePessoa = _context.Pessoas.ToList();
-        return _mapper.Map<List<ReadPessoaDto>>( _context.Pessoas.Skip(skip).Take(take));
+        return _mapper.Map<List<ReadPessoaDto>>(_context.Pessoas.Skip(skip).Take(take));
     }
 
     /// <summary>
@@ -59,10 +61,11 @@ public class PessoaController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public IActionResult ConsultaPessoasId(int id) 
+    [Authorize(Roles = "usuario,admin")]
+    public IActionResult ConsultaPessoasId(int id)
     {
-       var pessoa = _context.Pessoas.FirstOrDefault(pessoa => pessoa.Id == id);
-        if(pessoa == null) return NotFound();
+        var pessoa = _context.Pessoas.FirstOrDefault(pessoa => pessoa.Id == id);
+        if (pessoa == null) return NotFound();
         var pessoaDto = _mapper.Map<ReadPessoaDto>(pessoa);
         return Ok(pessoaDto);
 
@@ -74,13 +77,14 @@ public class PessoaController : ControllerBase
     /// <param name="uf"></param>
     /// <returns></returns>
     [HttpGet("uf/{Uf}")]
+    [Authorize(Roles = "usuario,admin")]
     public IEnumerable<ReadPessoaDto> ConsultaPessoasUf(string uf)
     {
         var listaPessoa = _context.Pessoas.Where(pessoa => pessoa.Uf.ToUpper().Contains(uf.ToUpper())).ToList();
-        var listPessoa = listaPessoa.Where(pessoa => pessoa.Uf.Contains(uf)).ToList(); 
+        var listPessoa = listaPessoa.Where(pessoa => pessoa.Uf.Contains(uf)).ToList();
         return _mapper.Map<List<ReadPessoaDto>>(listaPessoa);
     }
-      
+
     /// <summary>        
     /// Altera todo cadasto passando todos os paramentos      
     /// </summary>      
@@ -88,11 +92,13 @@ public class PessoaController : ControllerBase
     /// <param name="pessoaDto"></param>        
     /// <returns></returns>
     [HttpPut("{id}")]
+    [Authorize(Roles = "admin")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
     public IActionResult AtualizaPessoa(int id, [FromBody] UpdatePessoaDto pessoaDto)
     {
         var pessoa = _context.Pessoas.FirstOrDefault(
             pessoa => pessoa.Id == id);
-        if (pessoa == null) return NotFound();
+        if (pessoa == null) return NotFound("Id não exite");
         _mapper.Map(pessoaDto, pessoa);
         _context.SaveChanges();
         return NoContent();
@@ -105,6 +111,8 @@ public class PessoaController : ControllerBase
     /// <param name="patch"></param>
     /// <returns></returns>
     [HttpPatch("{id}")]
+    [Authorize(Roles = "admin")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
     public IActionResult AtualizaPessoaParcial(int id, JsonPatchDocument<UpdatePessoaDto> patch)
     {
         var pessoa = _context.Pessoas.FirstOrDefault(
@@ -113,7 +121,7 @@ public class PessoaController : ControllerBase
         var PessoaParaAtualiza = _mapper.Map<UpdatePessoaDto>(pessoa);
         patch.ApplyTo(PessoaParaAtualiza, ModelState);
 
-        if(!TryValidateModel(PessoaParaAtualiza))
+        if (!TryValidateModel(PessoaParaAtualiza))
         {
             return ValidationProblem(ModelState);
         }
@@ -129,6 +137,7 @@ public class PessoaController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
+    [Authorize(Roles = "admin")]
     public IActionResult DeletaPessoa(int id)
     {
         var pessoa = _context.Pessoas.FirstOrDefault(
@@ -136,6 +145,6 @@ public class PessoaController : ControllerBase
         if (pessoa == null) return NotFound();
         _context.Remove(pessoa);
         _context.SaveChanges();
-        return NoContent();
+        return Ok("Pessoa deletada com sucesso");
     }
 }
