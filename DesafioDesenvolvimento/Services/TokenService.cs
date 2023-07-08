@@ -1,7 +1,6 @@
 ﻿using DesafioDesenvolvimento.Models;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
-using System.Reactive.Subjects;
 using System.Security.Claims;
 using System.Text;
 
@@ -28,6 +27,6 @@ namespace DesafioDesenvolvimento.Services
             return tokenHandler.WriteToken(token);
         }
 
-        
+
     }
 }

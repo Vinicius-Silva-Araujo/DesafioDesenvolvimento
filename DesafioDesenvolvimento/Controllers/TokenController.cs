@@ -29,7 +29,7 @@ namespace DesafioDesenvolvimento.Controllers
 
             // Retorna os dados
             return new
-            {                
+            {
                 token = token
             };
         }

@@ -4,7 +4,7 @@ namespace DesafioDesenvolvimento.Data.Dtos;
 
 public class CreatePessoaDto
 {
-    
+
 
     public int Id { get; set; }
 

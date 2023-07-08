@@ -62,7 +62,7 @@ namespace DesafioDesenvolvimento
 
             app.UseAuthentication();
 
-            app.UseAuthorization();                      
+            app.UseAuthorization();
 
             app.MapControllers();
 

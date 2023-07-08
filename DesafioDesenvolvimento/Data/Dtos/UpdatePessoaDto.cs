@@ -3,8 +3,8 @@
 namespace DesafioDesenvolvimento.Data.Dtos;
 
 public class UpdatePessoaDto
-{    
-    
+{
+
     [Required(ErrorMessage = "O nome é obrigatorio")]
     [StringLength(100, ErrorMessage = "Nome pode ter no maximo 100 caracteres.")]
 

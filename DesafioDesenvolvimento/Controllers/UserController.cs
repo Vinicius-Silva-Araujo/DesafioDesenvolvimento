@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DesafioDesenvolvimento.Controllers
 {
-    public class UserController : ControllerBase 
+    public class UserController : ControllerBase
     {
         [HttpGet]
         [Route("api/anonimo")]
