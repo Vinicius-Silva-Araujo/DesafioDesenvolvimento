@@ -25,7 +25,9 @@ Criando aplicação Crud
 SELECT p.nome, 'Contas pagas' as Origem, cPagas.*, + cPagas.acrescimo - cPagas.desconto as valor
 FROM Pessoa p
 INNER JOIN contas_pagas cPagas ON cPagas.codigo_fornecedor = p.codigo
+
 UNION
+
 SELECT p.nome, 'Contas a Pagar' as Origem, cPagar.*, + cPagar.acressimo - cPagar.desconto as valor
 FROM Pessoa p
 INNER JOIN contas_a_pagar cPagar ON cPagar.codigo_fornecedor = p.codigo
