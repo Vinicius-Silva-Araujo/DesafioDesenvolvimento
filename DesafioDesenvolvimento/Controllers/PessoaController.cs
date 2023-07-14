@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace DesafioDesenvolvimento.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("[Controller]")]
 public class PessoaController : ControllerBase
 {
     private PessoaContext _context;
@@ -26,7 +26,7 @@ public class PessoaController : ControllerBase
     /// </summary>
     /// <param name="pessoaDto"></param>
     /// <returns></returns>
-    [HttpPost]
+    [HttpPost("cadastrar")]    
     [ProducesResponseType(StatusCodes.Status201Created)]
     [Authorize(Roles = "usuario,admin")]
     public IActionResult AdicinarPessoa([FromBody] CreatePessoaDto pessoaDto)
@@ -45,7 +45,7 @@ public class PessoaController : ControllerBase
     /// <param name="skip"></param>
     /// <param name="take"></param>
     /// <returns></returns>
-    [HttpGet]
+    [HttpGet("consultar")]
     [Authorize(Roles = "usuario,admin")]
     public IEnumerable<ReadPessoaDto> ConsultaPessoas([FromQuery] int skip = 0, [FromQuery] int take = 20)
     {
@@ -58,7 +58,7 @@ public class PessoaController : ControllerBase
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    [HttpGet("{id}")]
+    [HttpGet("consultar {id}")]
     [Authorize(Roles = "usuario,admin")]
     public IActionResult ConsultaPessoasId(int id)
     {
@@ -74,7 +74,7 @@ public class PessoaController : ControllerBase
     /// </summary>
     /// <param name="uf"></param>
     /// <returns></returns>
-    [HttpGet("uf/{Uf}")]
+    [HttpGet("consultarUf/{Uf}")]
     [Authorize(Roles = "usuario,admin")]
     public IEnumerable<ReadPessoaDto> ConsultaPessoasUf(string uf)
     {
@@ -89,7 +89,7 @@ public class PessoaController : ControllerBase
     /// <param name="id"></param>     
     /// <param name="pessoaDto"></param>        
     /// <returns></returns>
-    [HttpPut("{id}")]
+    [HttpPut("atualizar {id}")]
     [Authorize(Roles = "admin")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     public IActionResult AtualizaPessoa(int id, [FromBody] UpdatePessoaDto pessoaDto)
@@ -108,7 +108,7 @@ public class PessoaController : ControllerBase
     /// <param name="id"></param>
     /// <param name="patch"></param>
     /// <returns></returns>
-    [HttpPatch("{id}")]
+    [HttpPatch(" atualizarParcial {id}")]    
     [Authorize(Roles = "admin")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     public IActionResult AtualizaPessoaParcial(int id, JsonPatchDocument<UpdatePessoaDto> patch)
@@ -134,7 +134,7 @@ public class PessoaController : ControllerBase
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    [HttpDelete("{id}")]
+    [HttpDelete("delete {id}")]    
     [Authorize(Roles = "admin")]
     public IActionResult DeletaPessoa(int id)
     {
