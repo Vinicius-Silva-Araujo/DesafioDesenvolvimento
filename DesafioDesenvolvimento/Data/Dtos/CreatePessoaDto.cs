@@ -13,6 +13,7 @@ public class CreatePessoaDto
 
     public string Nome { get; set; }
     [Required(ErrorMessage = "O CPF é obrigatorio")]
+    [MinLength(11, ErrorMessage = "Cpf deve conter 11 digitos")]
     [StringLength(11, ErrorMessage = "O tamanho do CPF é de 11 digitos.")]
     public string Cpf { get; set; }
 

@@ -28,6 +28,7 @@ public class PessoaController : ControllerBase
     /// <returns></returns>
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
+    [Authorize(Roles = "usuario,admin")]
     public IActionResult AdicinarPessoa([FromBody] CreatePessoaDto pessoaDto)
     {
         Pessoa pessoa = _mapper.Map<Pessoa>(pessoaDto);

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DesafioDesenvolvimento.Controllers
 {
-    public class TokenController : ControllerBase
+    public class LoginController : ControllerBase
     {
         // Chamada para autenticar
         [HttpPost]
