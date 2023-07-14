@@ -8,6 +8,9 @@ Criando aplicação Crud
 * AspNetCore.Authentication
 * AspNetCore.JwtBearer
 * Swashbuckle.AspNetCore
+* AutoMapper
+* Microsoft.AspNetCore.Mvc
+  
 
   
   ![Swagger](https://github.com/vini-Baba-Yaga/DesafioDesenvolvimento/assets/129880603/d410f503-e161-4665-97f5-46b774701cc6)
