@@ -13,7 +13,7 @@ Criando aplicação Crud
   
 
   
-  ![Swagger](https://github.com/vini-Baba-Yaga/DesafioDesenvolvimento/assets/129880603/d410f503-e161-4665-97f5-46b774701cc6)
+  ![Swagger](https://github.com/Vinicius-Silva-Araujo/fioDesenvolvimento/assets/129880603/d410f503-e161-4665-97f5-46b774701cc6)
 
 # Desafio 2
  
